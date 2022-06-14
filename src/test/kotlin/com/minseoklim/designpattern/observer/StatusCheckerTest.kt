@@ -10,11 +10,14 @@ internal class StatusCheckerTest {
     fun check() {
         assertDoesNotThrow {
             val statusChecker = StatusChecker()
-            statusChecker.add(StatusEmailSender())
-            statusChecker.add(StatusSmsSender())
-            statusChecker.add(ErrorStatusSmsSender())
+//            statusChecker.add(StatusEmailSender())
+//            statusChecker.add(StatusSmsSender())
+//            statusChecker.add(ErrorStatusSmsSender())
+            statusChecker.add(EmergencyStatusSender(statusChecker))
 
-            statusChecker.check()
+            repeat(20) {
+                statusChecker.check()
+            }
         }
     }
 }

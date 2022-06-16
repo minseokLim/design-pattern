@@ -4,25 +4,30 @@ import org.slf4j.LoggerFactory
 
 class StatusChecker : StatusSubject() {
     var errorCount = 0
+    var lastStatusFault = false
     private val logger = LoggerFactory.getLogger(this::class.java)
 
     companion object {
         private const val ERROR_LIMIT = 10
     }
 
-    fun check() {
+    fun check(): Status {
         val status = loadStatus()
         logger.info("status : $status")
 
         if (status.isNotOk()) {
             if (status.isError()) {
                 errorCount++
+                lastStatusFault = true
             }
 
-            super.notifyStatus(status)
+//            super.notifyStatus(status)
         } else {
             errorCount = 0
+            lastStatusFault = false
         }
+
+        return status
     }
 
     fun exceedErrorLimit(): Boolean {

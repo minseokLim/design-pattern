@@ -1,6 +1,10 @@
 package com.minseoklim.designpattern.abstractfactory
 
-interface SmallFlight
+abstract class SmallFlight : Cloneable {
+    public override fun clone(): Any {
+        return super.clone()
+    }
+}
 
-class DashSmallFlight : SmallFlight
-class MissileSmallFlight : SmallFlight
+class DashSmallFlight : SmallFlight()
+class MissileSmallFlight : SmallFlight()

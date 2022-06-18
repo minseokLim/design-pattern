@@ -1,6 +1,10 @@
 package com.minseoklim.designpattern.abstractfactory
 
-interface Boss
+abstract class Boss : Cloneable {
+    public override fun clone(): Any {
+        return super.clone()
+    }
+}
 
-class StrongAttackBoss : Boss
-class CloningAttackBoss : Boss
+class StrongAttackBoss : Boss()
+class CloningAttackBoss : Boss()

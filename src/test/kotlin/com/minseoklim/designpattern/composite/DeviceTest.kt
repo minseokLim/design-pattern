@@ -1,11 +1,13 @@
 package com.minseoklim.designpattern.composite
 
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
+import org.junit.jupiter.api.assertThrows
 
 internal class DeviceTest {
     @Test
-    fun test() {
+    fun test1() {
         assertDoesNotThrow {
             val airConditioner1 = AirConditioner()
             val light1 = Light()
@@ -27,5 +29,23 @@ internal class DeviceTest {
             println("------------------------------------------")
             totalDeviceGroup.turnOff()
         }
+    }
+
+    @Test
+    fun test2() {
+        val airConditioner = AirConditioner()
+        val light = Light()
+
+        assertThrows<UnsupportedOperationException> {
+            airConditioner.addDevice(light)
+        }
+        assertThat(airConditioner.canContain(light)).isFalse
+
+        val deviceGroup: Device = DeviceGroup(airConditioner, light)
+        val elevator = Elevator()
+        assertDoesNotThrow {
+            deviceGroup.addDevice(elevator)
+        }
+        assertThat(deviceGroup.canContain(elevator)).isTrue
     }
 }
